@@ -7,7 +7,7 @@
 
 import Foundation
 
-var menu = ["1. 랜덤금액 지급", "2. 호텔 방 정보", "3. 호텔 객실 예약", "4. 나의 예약 목록 보기", "5. 나의 예약 목록 체크인 날짜 순으로 보기", "0. 종료"]
+var menu = ["1. 랜덤금액 지급", "2. 호텔 방 정보", "3. 호텔 객실 예약", "4. 나의 예약 목록 보기", "5. 나의 예약 목록 체크인 날짜 순으로 보기", "6. 예약 삭제", "7. 예약 수정", "8. 나의 입출금 내역 출력", "9. 나의 잔액 확인", "0. 종료"]
 var balance = 0
 var rooms = [
     (number:1, price: 10000),
@@ -20,7 +20,7 @@ var rooms = [
 var reservations: [Reservation] = []
 
 struct Reservation {
-    let roomNumber: Int
+    var roomNumber: Int
     let checkInDate: Date
     let checkOutDate: Date
     let reservationFee: Int
@@ -68,8 +68,10 @@ func makeReservation() {
     let checkOutDateString = readLine()!
     let checkOutDate = dateFormatter.date(from: checkOutDateString)!
     
+    let reservationFee = calculateFee(roomNumber: roomNumber, checkInDate: checkInDate, checkOutDate: checkOutDate)
+    
     if isReservationAvailable(roomNumber: roomNumber, checkInDate: checkInDate, checkOutDate: checkOutDate) {
-        let reservationFee = calculateFee(roomNumber: roomNumber, checkInDate: checkInDate, checkOutDate: checkOutDate)
+        
         balance -= reservationFee
         
         if balance < 0 {
@@ -78,6 +80,7 @@ func makeReservation() {
         } else {
             print("예약이 완료되었습니다.")
             reservations.append(Reservation(roomNumber: roomNumber, checkInDate: checkInDate, checkOutDate: checkOutDate, reservationFee: reservationFee))
+            transactions.append(Transaction(type: "예약으로 출금됨", amount: reservationFee))
         }
     }
     else {
@@ -128,14 +131,70 @@ func sortReservation() {
     printReservationList()
 }
 
+func deleteReservation() {
+    printReservationList()
+    print("취소할 예약 번호를 입력하세요.")
+    let deleteReservNum = Int(readLine()!)!
+    balance += reservations[deleteReservNum-1].reservationFee
+    transactions.append(Transaction(type: "환불금으로 입금됨", amount: reservations[deleteReservNum-1].reservationFee))
+    reservations.remove(at: deleteReservNum-1)
+}
+
+func changeRoom() {
+    printReservationList()
+    print("변경할 예약 번호를 입력하세요.")
+    let changeReservNum = Int(readLine()!)!
+    
+    printRoomInfo()
+    print("변경할 방 번호를 입력하세요.")
+    let changeRoomNum = Int(readLine()!)!
+    
+    let oldFee = reservations[changeReservNum-1].reservationFee
+    reservations[changeReservNum-1].roomNumber = changeRoomNum
+    let calculateFee = calculateFee(roomNumber: reservations[changeReservNum-1].roomNumber, checkInDate: reservations[changeReservNum-1].checkInDate, checkOutDate: reservations[changeReservNum-1].checkOutDate)
+    let newFee = calculateFee
+    
+    let feeDifference = oldFee - newFee
+    
+    if oldFee > newFee {
+        balance += feeDifference
+        transactions.append(Transaction(type: "차액만큼 입금됨", amount: feeDifference))
+    } else {
+        balance += feeDifference
+        transactions.append(Transaction(type: "차액만큼 출금됨", amount: -(feeDifference)))
+    }
+}
+
+struct Transaction {
+    var type: String
+    var amount: Int
+}
+
+var transactions: [Transaction] = []
+
+let numberFormatter = NumberFormatter()
+numberFormatter.numberStyle = .decimal
+
+func printAccountHistory() {
+    for transaction in transactions {
+        print(transaction.type, numberFormatter.string(from: NSNumber(value: transaction.amount))! + "원")
+    }
+}
+
+func printBalance() {
+    print("잔액은 " + numberFormatter.string(from: NSNumber(value: balance))! + "원입니다.")
+}
+
 func main() {
     while true {
         let input = selectMenu()
         
         switch input {
         case 1:
-            balance += getRandom()
+            let random = getRandom()
+            balance += random
             print("랜덤 금액지급: \(balance)")
+            transactions.append(Transaction(type: "랜덤 금액으로 입금됨", amount: random))
         case 2:
             printRoomInfo()
         case 3:
@@ -144,6 +203,14 @@ func main() {
             printReservationList()
         case 5:
             sortReservation()
+        case 6:
+            deleteReservation()
+        case 7:
+            changeRoom()
+        case 8:
+            printAccountHistory()
+        case 9:
+            printBalance()
         case 0:
             return
         default:
