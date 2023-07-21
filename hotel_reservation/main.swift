@@ -7,7 +7,7 @@
 
 import Foundation
 
-var menu = ["1. 랜덤금액 지급", "2. 호텔 방 정보", "3. 호텔 객실 예약", "4. 나의 예약 목록 보기", "5. 나의 예약 목록 체크인 날짜 순으로 보기", "6. 예약 삭제", "7. 예약 수정", "8. 나의 입출금 내역 출력", "9. 나의 잔액 확인", "0. 종료"]
+var menu = ["1. 랜덤금액 지급", "2. 호텔 방 정보", "3. 호텔 객실 예약 (10일 이상 예약 시 20% 할인)", "4. 나의 예약 목록 보기", "5. 나의 예약 목록 체크인 날짜 순으로 보기", "6. 예약 삭제", "7. 예약 수정", "8. 나의 입출금 내역 출력", "9. 나의 잔액 확인", "0. 종료"]
 var balance = 0
 var rooms = [
     (number:1, price: 10000),
@@ -107,8 +107,24 @@ func calculateFee(roomNumber: Int, checkInDate: Date, checkOutDate: Date) -> Int
     }
     
     let days = checkInDate.distance(to: checkOutDate) / 86400 //24시간 == 86400초
+    let totalFee = feePerDay * Int(days)
     
-    return feePerDay * Int(days)
+    var isPremiumMemeber: Bool {
+        return days >= 10
+    }
+    
+    func applyDiscount(amount: Int, isPremiumMember: Bool) -> Int {
+        if isPremiumMember {
+            return amount / 5 // 20% 할인
+        } else {
+            return 0
+        }
+    }
+    
+    let discountAmount = applyDiscount(amount: totalFee, isPremiumMember: isPremiumMemeber)
+    let discountedTotalFee = totalFee - discountAmount
+    
+    return discountedTotalFee
 }
 
 func isReservationAvailable(roomNumber: Int, checkInDate: Date, checkOutDate: Date) -> Bool {
@@ -135,9 +151,28 @@ func deleteReservation() {
     printReservationList()
     print("취소할 예약 번호를 입력하세요.")
     let deleteReservNum = Int(readLine()!)!
-    balance += reservations[deleteReservNum-1].reservationFee
-    transactions.append(Transaction(type: "환불금으로 입금됨", amount: reservations[deleteReservNum-1].reservationFee))
-    reservations.remove(at: deleteReservNum-1)
+    
+    let currentDate = Date()
+    let dateDifference = currentDate.distance(to: reservations[deleteReservNum-1].checkInDate) / 86400 // 하루 86400초
+    
+    if dateDifference >= 30 {
+        balance += reservations[deleteReservNum-1].reservationFee
+        transactions.append(Transaction(type: "환불금으로 입금됨", amount: reservations[deleteReservNum-1].reservationFee))
+        reservations.remove(at: deleteReservNum-1)
+        print("예약을 취소하였습니다.")
+    } else if dateDifference >= 14 {
+        balance += reservations[deleteReservNum-1].reservationFee / 2
+        transactions.append(Transaction(type: "환불금으로 입금됨", amount: reservations[deleteReservNum-1].reservationFee / 2))
+        reservations.remove(at: deleteReservNum-1)
+        print("예약을 취소하였습니다.")
+    } else if dateDifference >= 7 {
+        balance += reservations[deleteReservNum-1].reservationFee / 4
+        transactions.append(Transaction(type: "환불금으로 입금됨", amount: reservations[deleteReservNum-1].reservationFee / 4))
+        reservations.remove(at: deleteReservNum-1)
+        print("예약을 취소하였습니다.")
+    } else {
+        print("환불이 불가합니다.")
+    }
 }
 
 func changeRoom() {
