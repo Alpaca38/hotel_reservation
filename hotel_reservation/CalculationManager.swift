@@ -10,9 +10,7 @@ import Foundation
 class CalculationManager {
     let formatter = Formatter()
 
-    func calculateFee(roomNumber: Int, checkInDate: Date, checkOutDate: Date) -> Int {
-        formatter.dateFormatter.dateFormat = "yyyy-MM-dd"
-        formatter.dateFormatter.locale = Locale(identifier:"ko_KR")
+    func calculateFee(roomNumber: Int, checkInDate: Date?, checkOutDate: Date?) -> Int {
         var feePerDay = 0
         
         switch roomNumber {
@@ -30,7 +28,7 @@ class CalculationManager {
             feePerDay = 0
         }
         
-        let days = checkInDate.distance(to: checkOutDate) / 86400 //24시간 == 86400초
+        let days = checkInDate!.distance(to: checkOutDate!) / 86400 //24시간 == 86400초
         let totalFee = feePerDay * Int(days)
         
         var isPremiumMemeber: Bool {
