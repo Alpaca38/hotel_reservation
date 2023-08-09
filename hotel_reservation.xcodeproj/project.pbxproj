@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		D10969122A69285100014298 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10969112A69285100014298 /* main.swift */; };
+		D1B92A1F2A825032008DD6DE /* ReservationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B92A1E2A825032008DD6DE /* ReservationManager.swift */; };
+		D1B92A232A825273008DD6DE /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B92A222A825273008DD6DE /* TransactionManager.swift */; };
+		D1B92A252A825777008DD6DE /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B92A242A825777008DD6DE /* Random.swift */; };
+		D1B92A272A825808008DD6DE /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B92A262A825808008DD6DE /* Room.swift */; };
+		D1B92A292A82589B008DD6DE /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B92A282A82589B008DD6DE /* Menu.swift */; };
+		D1B92A2B2A8259E8008DD6DE /* CalculationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B92A2A2A8259E8008DD6DE /* CalculationManager.swift */; };
+		D1B92A2D2A825A5C008DD6DE /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B92A2C2A825A5C008DD6DE /* Formatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +32,13 @@
 /* Begin PBXFileReference section */
 		D109690E2A69285100014298 /* hotel_reservation */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = hotel_reservation; sourceTree = BUILT_PRODUCTS_DIR; };
 		D10969112A69285100014298 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		D1B92A1E2A825032008DD6DE /* ReservationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationManager.swift; sourceTree = "<group>"; };
+		D1B92A222A825273008DD6DE /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
+		D1B92A242A825777008DD6DE /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
+		D1B92A262A825808008DD6DE /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		D1B92A282A82589B008DD6DE /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		D1B92A2A2A8259E8008DD6DE /* CalculationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationManager.swift; sourceTree = "<group>"; };
+		D1B92A2C2A825A5C008DD6DE /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +71,13 @@
 		D10969102A69285100014298 /* hotel_reservation */ = {
 			isa = PBXGroup;
 			children = (
+				D1B92A222A825273008DD6DE /* TransactionManager.swift */,
+				D1B92A1E2A825032008DD6DE /* ReservationManager.swift */,
+				D1B92A2A2A8259E8008DD6DE /* CalculationManager.swift */,
+				D1B92A2C2A825A5C008DD6DE /* Formatter.swift */,
+				D1B92A242A825777008DD6DE /* Random.swift */,
+				D1B92A262A825808008DD6DE /* Room.swift */,
+				D1B92A282A82589B008DD6DE /* Menu.swift */,
 				D10969112A69285100014298 /* main.swift */,
 			);
 			path = hotel_reservation;
@@ -120,7 +141,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1B92A2B2A8259E8008DD6DE /* CalculationManager.swift in Sources */,
+				D1B92A292A82589B008DD6DE /* Menu.swift in Sources */,
+				D1B92A232A825273008DD6DE /* TransactionManager.swift in Sources */,
+				D1B92A252A825777008DD6DE /* Random.swift in Sources */,
+				D1B92A1F2A825032008DD6DE /* ReservationManager.swift in Sources */,
 				D10969122A69285100014298 /* main.swift in Sources */,
+				D1B92A2D2A825A5C008DD6DE /* Formatter.swift in Sources */,
+				D1B92A272A825808008DD6DE /* Room.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
