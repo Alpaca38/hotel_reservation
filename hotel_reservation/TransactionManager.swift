@@ -7,13 +7,14 @@
 
 import Foundation
 
+// 입출금
 class TransactionManager {
     var transactions: [Transaction] = []
     let formatter = Formatter()
     
     func printAccountHistory() {
         for transaction in transactions {
-            print(transaction.type, formatter.numberFormatter.string(from: NSNumber(value: transaction.amount))! + "원")
+            print(transaction.type, "\(transaction.amount)" + "원")
         }
     }
     

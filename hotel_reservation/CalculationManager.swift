@@ -9,7 +9,7 @@ import Foundation
 
 class CalculationManager {
     let formatter = Formatter()
-
+    
     func calculateFee(roomNumber: Int, checkInDate: Date?, checkOutDate: Date?) -> Int {
         var feePerDay = 0
         
@@ -40,7 +40,7 @@ class CalculationManager {
         
         return discountedTotalFee
     }
-
+    
     func applyDiscount(amount: Int, isPremiumMember: Bool) -> Int {
         if isPremiumMember {
             return amount / 5 // 20% 할인
@@ -50,8 +50,9 @@ class CalculationManager {
     }
     
     func printBalance() {
-        formatter.numberFormatter.numberStyle = .decimal
-        print("잔액은 " + formatter.numberFormatter.string(from: NSNumber(value: balance))! + "원입니다.")
+        if let balance = formatter.numberFormatter.string(from: NSNumber(value: balance)) {
+            print("잔액은 " + balance + "원입니다.")
+        }
     }
-
+    
 }

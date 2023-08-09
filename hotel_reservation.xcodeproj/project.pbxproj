@@ -73,9 +73,9 @@
 		D10969102A69285100014298 /* hotel_reservation */ = {
 			isa = PBXGroup;
 			children = (
-				D1B92A222A825273008DD6DE /* TransactionManager.swift */,
 				D1B92A1E2A825032008DD6DE /* ReservationManager.swift */,
 				D1B92A2A2A8259E8008DD6DE /* CalculationManager.swift */,
+				D1B92A222A825273008DD6DE /* TransactionManager.swift */,
 				D1B92A2E2A825EE7008DD6DE /* User.swift */,
 				D1B92A2C2A825A5C008DD6DE /* Formatter.swift */,
 				D1B92A242A825777008DD6DE /* Random.swift */,

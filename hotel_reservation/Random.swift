@@ -8,8 +8,11 @@
 import Foundation
 
 class Random {
+    let formatter = Formatter()
+    
     func getRandom() -> Int {
         let randomMoney = (Int.random(in: 100000...500000) / 10000) * 10000
+        
         return randomMoney
     }
 }

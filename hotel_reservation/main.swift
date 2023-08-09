@@ -17,8 +17,7 @@ let random = Random()
 let room = Room()
 let menu = Menu()
 let user = User()
-
-
+let formatter = Formatter()
 
 func showMenu() {
     while true {
@@ -28,7 +27,9 @@ func showMenu() {
         case 1:
             let randomMoney = random.getRandom()
             balance += randomMoney
-            print("랜덤 금액지급: \(balance)")
+            if let balance = formatter.numberFormatter.string(from: NSNumber(value: balance)) {
+                print("랜덤 금액지급: " + balance + "원")
+            }
             transactionManager.getMoney(type: "랜덤 금액으로 입금됨", amount: randomMoney)
         case 2:
             room.printRoomInfo()

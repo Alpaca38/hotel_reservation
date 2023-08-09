@@ -27,25 +27,25 @@ class ReservationManager {
         
         print("체크인 날짜를 입력하세요 (yyyy-MM-dd):")
         var checkInDate: Date? = nil
-            while checkInDate == nil {
-                if let checkInDateString = readLine(),
-                   let date = formatter.dateFormatter.date(from: checkInDateString) {
-                    checkInDate = date
-                } else {
-                    print("유효한 체크인 날짜를 입력해주세요.")
-                }
+        while checkInDate == nil {
+            if let checkInDateString = readLine(),
+               let date = formatter.dateFormatter.date(from: checkInDateString) {
+                checkInDate = date
+            } else {
+                print("유효한 체크인 날짜를 입력해주세요.")
             }
+        }
         
         print("체크아웃 날짜를 입력하세요 (yyyy-MM-dd):")
         var checkOutDate: Date? = nil
-            while checkOutDate == nil {
-                if let checkOutDateString = readLine(),
-                   let date = formatter.dateFormatter.date(from: checkOutDateString) {
-                    checkOutDate = date
-                } else {
-                    print("유효한 체크아웃 날짜를 입력해주세요.")
-                }
+        while checkOutDate == nil {
+            if let checkOutDateString = readLine(),
+               let date = formatter.dateFormatter.date(from: checkOutDateString) {
+                checkOutDate = date
+            } else {
+                print("유효한 체크아웃 날짜를 입력해주세요.")
             }
+        }
         
         let reservationFee = calculationManager.calculateFee(roomNumber: roomNumber, checkInDate: checkInDate, checkOutDate: checkOutDate)
         
@@ -72,7 +72,17 @@ class ReservationManager {
     }
     
     func isReservationAvailable(roomNumber: Int, checkInDate: Date?, checkOutDate: Date?) -> Bool {
-        let isAvailable = reservations.filter { $0.roomNumber == roomNumber && $0.checkInDate! <= checkInDate! && $0.checkOutDate! >= checkOutDate! }.isEmpty
+        guard let checkInDate = checkInDate, let checkOutDate = checkOutDate else {
+            return false
+        }
+        let isAvailable = reservations.filter { reservation in
+            if let reservationCheckIn = reservation.checkInDate, let reservationCheckOut = reservation.checkOutDate {
+                return reservation.roomNumber == roomNumber &&
+                reservationCheckIn <= checkInDate &&
+                reservationCheckOut >= checkOutDate
+            }
+            return false
+        }.isEmpty
         
         return isAvailable
     }
@@ -81,8 +91,11 @@ class ReservationManager {
         for reservation in reservations {
             print("사용자: \(reservation.userName)")
             print("방 번호: \(reservation.roomNumber)")
-            print("체크인 날짜: \(formatter.dateFormatter.string(from: reservation.checkInDate!))")
-            print("체크아웃 날짜: \(formatter.dateFormatter.string(from: reservation.checkOutDate!))")
+            if let checkInDate = reservation.checkInDate,
+               let checkOutDate = reservation.checkOutDate {
+                print("체크인 날짜: \(formatter.dateFormatter.string(from: checkInDate))")
+                print("체크아웃 날짜: \(formatter.dateFormatter.string(from: checkOutDate))")
+            }
             print("예약 금액: \(reservation.reservationFee)")
         }
     }
@@ -96,31 +109,43 @@ class ReservationManager {
         
         printReservationList()
         print("취소할 예약 번호를 입력하세요.")
-        let deleteReservNum = Int(readLine()!)!
-        
-        let currentDate = Date()
-        let dateDifference = currentDate.distance(to: reservations[deleteReservNum-1].checkInDate!) / 86400 // 하루 86400초
-        if reservations[deleteReservNum-1].userName == user.currentUser {
-            if dateDifference >= 30 {
-                balance += reservations[deleteReservNum-1].reservationFee
-                transactionManager.getMoney(type: "환불금으로 입금됨", amount: reservations[deleteReservNum-1].reservationFee)
-                reservations.remove(at: deleteReservNum-1)
-                print("예약을 취소하였습니다.")
-            } else if dateDifference >= 14 {
-                balance += reservations[deleteReservNum-1].reservationFee / 2
-                transactionManager.getMoney(type: "환불금으로 입금됨", amount: reservations[deleteReservNum-1].reservationFee / 2)
-                reservations.remove(at: deleteReservNum-1)
-                print("예약을 취소하였습니다.")
-            } else if dateDifference >= 7 {
-                balance += reservations[deleteReservNum-1].reservationFee / 4
-                transactionManager.getMoney(type: "환불금으로 입금됨", amount: reservations[deleteReservNum-1].reservationFee / 4)
-                reservations.remove(at: deleteReservNum-1)
-                print("예약을 취소하였습니다.")
+        if let deleteReservNum = readLine(), let deleteReservNum = Int(deleteReservNum) {
+            let currentDate = Date()
+            
+            if deleteReservNum > 0 && deleteReservNum <= reservations.count {
+                let reservation = reservations[deleteReservNum - 1]
+                if let checkInDate = reservation.checkInDate {
+                    let dateDifference = currentDate.distance(to: checkInDate) / 86400 // 하루 86400초
+                    if reservations[deleteReservNum-1].userName == user.currentUser {
+                        if dateDifference >= 30 {
+                            balance += reservations[deleteReservNum-1].reservationFee
+                            transactionManager.getMoney(type: "환불금으로 입금됨", amount: reservations[deleteReservNum-1].reservationFee)
+                            reservations.remove(at: deleteReservNum-1)
+                            print("예약을 취소하였습니다.")
+                        } else if dateDifference >= 14 {
+                            balance += reservations[deleteReservNum-1].reservationFee / 2
+                            transactionManager.getMoney(type: "환불금으로 입금됨", amount: reservations[deleteReservNum-1].reservationFee / 2)
+                            reservations.remove(at: deleteReservNum-1)
+                            print("예약을 취소하였습니다.")
+                        } else if dateDifference >= 7 {
+                            balance += reservations[deleteReservNum-1].reservationFee / 4
+                            transactionManager.getMoney(type: "환불금으로 입금됨", amount: reservations[deleteReservNum-1].reservationFee / 4)
+                            reservations.remove(at: deleteReservNum-1)
+                            print("예약을 취소하였습니다.")
+                        } else {
+                            print("환불이 불가합니다.")
+                        }
+                    } else {
+                        print("본인의 예약만 취소할 수 있습니다.")
+                    }
+                }
             } else {
-                print("환불이 불가합니다.")
+                print("잘못 입력하셨습니다.")
+                deleteReservation()
             }
         } else {
-            print("본인의 예약만 취소할 수 있습니다.")
+            print("잘못 입력하셨습니다. 다시 입력해주세요.")
+            deleteReservation()
         }
     }
     
@@ -156,7 +181,6 @@ class ReservationManager {
                     transactionManager.getMoney(type: "차액만큼 출금됨", amount: -(feeDifference))
                 }
             }
-            
         } else {
             print("본인의 예약만 변경할 수 있습니다.")
         }
