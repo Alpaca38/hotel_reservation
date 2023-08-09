@@ -9,6 +9,10 @@ import Foundation
 
 class Formatter {
     let numberFormatter = NumberFormatter()
-    
     let dateFormatter = DateFormatter()
+    
+    init() {
+        self.dateFormatter.locale = Locale(identifier:"ko_KR")
+        self.dateFormatter.dateFormat = "yyyy-MM-dd"
+    }
 }

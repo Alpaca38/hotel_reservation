@@ -15,6 +15,7 @@
 		D1B92A292A82589B008DD6DE /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B92A282A82589B008DD6DE /* Menu.swift */; };
 		D1B92A2B2A8259E8008DD6DE /* CalculationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B92A2A2A8259E8008DD6DE /* CalculationManager.swift */; };
 		D1B92A2D2A825A5C008DD6DE /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B92A2C2A825A5C008DD6DE /* Formatter.swift */; };
+		D1B92A2F2A825EE7008DD6DE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B92A2E2A825EE7008DD6DE /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,7 @@
 		D1B92A282A82589B008DD6DE /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		D1B92A2A2A8259E8008DD6DE /* CalculationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationManager.swift; sourceTree = "<group>"; };
 		D1B92A2C2A825A5C008DD6DE /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		D1B92A2E2A825EE7008DD6DE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				D1B92A222A825273008DD6DE /* TransactionManager.swift */,
 				D1B92A1E2A825032008DD6DE /* ReservationManager.swift */,
 				D1B92A2A2A8259E8008DD6DE /* CalculationManager.swift */,
+				D1B92A2E2A825EE7008DD6DE /* User.swift */,
 				D1B92A2C2A825A5C008DD6DE /* Formatter.swift */,
 				D1B92A242A825777008DD6DE /* Random.swift */,
 				D1B92A262A825808008DD6DE /* Room.swift */,
@@ -146,6 +149,7 @@
 				D1B92A232A825273008DD6DE /* TransactionManager.swift in Sources */,
 				D1B92A252A825777008DD6DE /* Random.swift in Sources */,
 				D1B92A1F2A825032008DD6DE /* ReservationManager.swift in Sources */,
+				D1B92A2F2A825EE7008DD6DE /* User.swift in Sources */,
 				D10969122A69285100014298 /* main.swift in Sources */,
 				D1B92A2D2A825A5C008DD6DE /* Formatter.swift in Sources */,
 				D1B92A272A825808008DD6DE /* Room.swift in Sources */,

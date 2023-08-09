@@ -16,10 +16,11 @@ let calculationManager = CalculationManager()
 let random = Random()
 let room = Room()
 let menu = Menu()
+let user = User()
 
 
 
-func main() {
+func showMenu() {
     while true {
         let input = menu.selectMenu()
         
@@ -45,6 +46,8 @@ func main() {
             transactionManager.printAccountHistory()
         case 9:
             calculationManager.printBalance()
+        case 10:
+            user.logout()
         case 0:
             return
         default:
@@ -53,4 +56,4 @@ func main() {
     }
 }
 
-main()
+showMenu()
